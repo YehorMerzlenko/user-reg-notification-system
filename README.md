@@ -34,7 +34,6 @@ Here is an example of a `.env` file for **local testing only**:
 ```bash
 DATABASE_URL="postgresql://universe_user:universe_password@localhost:5432/universe_db?schema=public"
 AWS_REGION=eu-central-1
-SQS_QUEUE_URL=http://sqs.eu-central-1.localstack.cloud:4566/000000000000/user-created
 SQS_QUEUE_NAME=user-created
 SQS_ENDPOINT=http://localhost:4566
 ```
