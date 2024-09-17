@@ -1,4 +1,4 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, Query } from '@nestjs/common';
 import { UsersService } from '../services/users.service';
 import { CreateUserDto } from '../dto/create-user.dto';
 import { randomUUID } from 'crypto';
@@ -14,23 +14,26 @@ export class UsersController {
 	) {}
 
 	@Post('register')
-	async register(@Body() createUserDto: CreateUserDto) {
+	async register(@Body() createUserDto: CreateUserDto,@Query('delay') delay?:string) {
 		const end = this.metricsService.startTimer();
-
 		const user = await this.usersService.register(createUserDto);
+
+		const messageAttributes = delay
+			? {
+				'X-Delay': {
+					DataType: 'Number',
+					StringValue: delay,
+				},
+			}
+			: {}; // Якщо delay не переданий, не додаємо атрибут
 
 		await this.sqsService.send('user-created', {
 			id: randomUUID(),
 			body: user,
-			messageAttributes: {
-				'X-Delay': {
-					DataType: 'Number',
-					StringValue: '5000',
-				},
-			},
+			messageAttributes
 		});
 
 		end()
-		return 'all done';
+		return { message: 'User registered successfully' };
 	}
 }

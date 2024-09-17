@@ -5,6 +5,7 @@ import { SqsModule } from '@ssut/nestjs-sqs';
 import { MetricsModule } from '@testcase/feature-prometheus';
 import { MetricsMiddleware } from '@testcase/feature-prometheus';
 import { SQS } from '@aws-sdk/client-sqs';
+import * as process from 'node:process';
 
 @Module({
 	imports: [
@@ -12,14 +13,13 @@ import { SQS } from '@aws-sdk/client-sqs';
 		MetricsModule,
 		UsersModule,
 		SqsModule.register({
-			consumers: [],
 			producers: [
 				{
-					name: 'user-created',
+					name: process.env.SQS_QUEUE_NAME,
 					queueUrl: 'user-created',
 					sqs: new SQS({
-						endpoint: 'http://localhost:4566',
-						region: 'eu-central-1',
+						endpoint: process.env.SQS_ENDPOINT,
+						region: process.env.AWS_REGION,
 						credentials: {
 							accessKeyId: 'accessKeyId',
 							secretAccessKey: 'accessKeyId'

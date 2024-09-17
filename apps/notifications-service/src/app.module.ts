@@ -3,25 +3,25 @@ import { SqsModule } from '@ssut/nestjs-sqs';
 import { UserCreationConsumer } from './consumers';
 import { FeatureAppleNotificationsModule } from '@testcase/feature-apple-notifications';
 import { SQS } from '@aws-sdk/client-sqs';
+import process from 'node:process';
 
 @Module({
 	imports: [
 		SqsModule.register({
 			consumers: [
 				{
-					name: 'user-created',
+					name: process.env.SQS_QUEUE_NAME,
 					queueUrl: 'user-created',
 					messageAttributeNames: ['X-Delay'],
-					pollingWaitTimeMs: 20 * 1000,
 					sqs: new SQS({
-						endpoint: 'http://localhost:4566',
-						region: 'eu-central-1',
+						endpoint: process.env.SQS_ENDPOINT,
+						region: process.env.AWS_REGION,
 						credentials: {
 							accessKeyId: 'accessKeyId',
-							secretAccessKey: 'accessKeyId',
-						},
-					}),
-				},
+							secretAccessKey: 'accessKeyId'
+						}
+					})
+				}
 			],
 		}),
 		FeatureAppleNotificationsModule,
