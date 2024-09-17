@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './services/users.service';
 import { UsersController } from './controllers/users.controller';
-import { MetricsModule } from '../metrics/metrics.module';
 import { PrismaModule } from '../prisma/prisma.module';
+import { MetricsModule } from '@testcase/feature-prometheus';
 
 @Module({
   imports: [PrismaModule, MetricsModule],
