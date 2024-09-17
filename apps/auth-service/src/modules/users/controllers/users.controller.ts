@@ -14,26 +14,29 @@ export class UsersController {
 	) {}
 
 	@Post('register')
-	async register(@Body() createUserDto: CreateUserDto,@Query('delay') delay?:string) {
+	async register(
+		@Body() createUserDto: CreateUserDto,
+		@Query('delay') delay?: string
+	) {
 		const end = this.metricsService.startTimer();
 		const user = await this.usersService.register(createUserDto);
 
 		const messageAttributes = delay
 			? {
-				'X-Delay': {
-					DataType: 'Number',
-					StringValue: delay,
-				},
-			}
-			: {}; // Якщо delay не переданий, не додаємо атрибут
+					'X-Delay': {
+						DataType: 'Number',
+						StringValue: delay,
+					},
+			  }
+			: {};
 
 		await this.sqsService.send('user-created', {
 			id: randomUUID(),
 			body: user,
-			messageAttributes
+			messageAttributes,
 		});
 
-		end()
+		end();
 		return { message: 'User registered successfully' };
 	}
 }

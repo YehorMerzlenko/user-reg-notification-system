@@ -3,6 +3,6 @@ import { AppleNotificationsService } from './services/apple-notifications.servic
 
 @Module({
 	providers: [AppleNotificationsService],
-	exports: [AppleNotificationsService]
+	exports: [AppleNotificationsService],
 })
 export class FeatureAppleNotificationsModule {}

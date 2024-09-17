@@ -18,10 +18,10 @@ import process from 'node:process';
 						region: process.env.AWS_REGION,
 						credentials: {
 							accessKeyId: 'accessKeyId',
-							secretAccessKey: 'accessKeyId'
-						}
-					})
-				}
+							secretAccessKey: 'accessKeyId',
+						},
+					}),
+				},
 			],
 		}),
 		FeatureAppleNotificationsModule,

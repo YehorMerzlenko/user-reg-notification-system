@@ -5,8 +5,8 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { MetricsModule } from '@testcase/feature-prometheus';
 
 @Module({
-  imports: [PrismaModule, MetricsModule],
-  controllers: [UsersController],
-  providers: [UsersService],
+	imports: [PrismaModule, MetricsModule],
+	controllers: [UsersController],
+	providers: [UsersService],
 })
 export class UsersModule {}

@@ -1,33 +1,33 @@
 version: '3'
 services:
-  localstack:
-    container_name: user-registration-localstack
-    image: localstack/localstack
-    restart: always
-    ports:
-      - "4566:4566"
-    environment:
-      - AWS_DEFAULT_REGION=eu-central-1
-      - AWS_ACCESS_KEY_ID=accessKeyId
-      - AWS_SECRET_ACCESS_KEY=secretAccessKey
-      - DEBUG=1
-      - EAGER_SERVICE_LOADING=1
-      - SERVICES=secretsmanager,sqs
-    volumes:
-      - ./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
-      - ./.docker/localstack:/var/lib/localstack
-      - /var/run/docker.sock:/var/run/docker.sock
-  database:
-    image: postgres
-    container_name: user-registration-db
-    environment:
-      POSTGRES_USER: universe_user
-      POSTGRES_PASSWORD: universe_password
-      POSTGRES_DB: universe_db
-    ports:
-      - '5432:5432'
-    volumes:
-      - ./.docker/postgres:/var/lib/postgresql/data
+    localstack:
+        container_name: user-registration-localstack
+        image: localstack/localstack
+        restart: always
+        ports:
+            - "4566:4566"
+        environment:
+            - AWS_DEFAULT_REGION=eu-central-1
+            - AWS_ACCESS_KEY_ID=accessKeyId
+            - AWS_SECRET_ACCESS_KEY=secretAccessKey
+            - DEBUG=1
+            - EAGER_SERVICE_LOADING=1
+            - SERVICES=secretsmanager,sqs
+        volumes:
+            - ./init-aws.sh:/etc/localstack/init/ready.d/init-aws.sh
+            - ./.docker/localstack:/var/lib/localstack
+            - /var/run/docker.sock:/var/run/docker.sock
+    database:
+        image: postgres
+        container_name: user-registration-db
+        environment:
+            POSTGRES_USER: universe_user
+            POSTGRES_PASSWORD: universe_password
+            POSTGRES_DB: universe_db
+        ports:
+            - '5432:5432'
+        volumes:
+            - ./.docker/postgres:/var/lib/postgresql/data
 #  prometheus:
 #    image: prom/prometheus
 #    container_name: user-registration-prometheus
@@ -38,5 +38,5 @@ services:
 #    ports:
 #      - 9090:9090
 networks:
-  localprom:
-    driver: bridge
+    localprom:
+        driver: bridge

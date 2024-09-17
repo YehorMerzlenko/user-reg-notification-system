@@ -5,9 +5,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 
 @Injectable()
 export class UsersService {
-	constructor(
-		private readonly prisma: PrismaService,
-	) {}
+	constructor(private readonly prisma: PrismaService) {}
 
 	async register({ password: rowPassword, email }: CreateUserDto) {
 		const hashedPassword = await bcrypt.hash(rowPassword, 10);
@@ -18,6 +16,6 @@ export class UsersService {
 			},
 		});
 
-		return user
+		return user;
 	}
 }
